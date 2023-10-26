@@ -44,10 +44,28 @@ extension ApiExtension on Future<Response<dynamic>> {
         case '409':
         case '401':
         case '403':
-          showErrorToast(errorResponse['errors']);
+          showErrorToast(errorResponse['errors'] ?? "Something went wrong");
           break;
         default:
           Fluttertoast.showToast(msg: errorResponse['message'].toString());
+      }
+    } else {
+      switch (statusCode.toString()) {
+        case 'ERROR_AUTH01':
+        case 'ERROR_AUTH02':
+        case 'ERROR_AUTH03':
+        case 'ERROR_OTP01':
+        case '404':
+        case '500':
+        case '400':
+        case '409':
+        case '401':
+        case '403':
+          Fluttertoast.showToast(
+              msg: errorResponse['message'] ?? "Something went wrong");
+          break;
+        default:
+          Fluttertoast.showToast(msg: "Something went wrong");
       }
     }
 
